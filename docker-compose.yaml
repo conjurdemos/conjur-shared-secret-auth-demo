@@ -1,0 +1,11 @@
+version: "3"
+services:
+  helloworld:
+    image: conjurorg-rotation-demo
+    build: .
+    volumes:
+      - ./helloworld.rb:/app/helloworld.rb
+    ports:
+      - "8080:4567"
+    environment: 
+      - RACK_ENV=DEMO
