@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+fail=0
+
+if [[ "$1" == "--fail" ]]; then
+    fail=1
+fi
+
+case $fail in
+    0)
+    curl --user "foo:bar" localhost:8080
+    ;;
+    1)
+    # Send an invalid password to the helloworld app
+    curl --user "foo:baz" -v localhost:8080
+    ;;
+esac
