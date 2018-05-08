@@ -10,10 +10,12 @@ fi
 
 case $fail in
     0)
-    curl --user "foo:bar" localhost:8080
+    api_secret=$(docker-compose run -T conjur-cli variable value app-secret)
+    echo "Connecting with API secret: $api_secret"
+    curl -H "Authorization:Token token=\"$api_secret\"" localhost:8080
     ;;
     1)
     # Send an invalid password to the helloworld app
-    curl --user "foo:baz" -v localhost:8080
+    curl -H "Authorization:Token token=\"invalid token\"" localhost:8080
     ;;
 esac

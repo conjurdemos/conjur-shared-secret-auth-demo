@@ -1,11 +1,36 @@
 version: "3"
 services:
+  
   helloworld:
     image: conjurorg-rotation-demo
     build: .
     volumes:
       - ./helloworld.rb:/app/helloworld.rb
+      - ./helloworld:/app/data
     ports:
       - "8080:4567"
     environment: 
-      - RACK_ENV=DEMO
+      RACK_ENV: DEMO
+      CONJUR_AUTHN_LOGIN: host/helloworld
+      CONJUR_AUTHN_API_KEY: 
+      CONJUR_APPLIANCE_URL: http://conjur
+      CONJUR_ACCOUNT: demo
+
+    depends_on: [ conjur ]
+
+  conjur:
+    image: cyberark/conjur
+    command: server -a demo
+    environment:
+      DATABASE_URL: postgres://postgres@database/postgres
+      CONJUR_DATA_KEY:
+    depends_on: [ database ]
+    
+  database:
+    image: postgres:9.3
+
+  conjur-cli:
+    image: cyberark/conjur-cli:5
+    depends_on: [ conjur ]
+    volumes:
+      - ./cli:/root

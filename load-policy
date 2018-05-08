@@ -1,0 +1,10 @@
+#!/bin/bash
+
+docker-compose run conjur-cli init -u http://conjur -a demo
+
+# Fetch admin API key
+api_key=$(docker-compose logs conjur | grep API | cut -d " " -f12 | tr -d "\n")
+
+docker-compose run conjur-cli authn login -u admin -p $api_key
+
+docker-compose run -T conjur-cli policy load root /root/policy.yaml
