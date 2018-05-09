@@ -10,7 +10,7 @@ fi
 
 case $fail in
     0)
-    api_secret=$(docker-compose run -T conjur-cli variable value app-secret)
+    api_secret=$(docker-compose run -T conjur-cli variable value helloworld-secret)
     echo "Connecting with API secret: $api_secret"
     curl -H "Authorization:Token token=\"$api_secret\"" localhost:8080
     ;;

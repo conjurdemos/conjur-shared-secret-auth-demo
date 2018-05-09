@@ -1,10 +1,10 @@
 - !host helloworld
 
-- !variable app-secret
+- !variable helloworld-secret
 
 - !permit
   role: !host helloworld
   privileges:
     - read
     - update
-  resource: !variable app-secret
+  resource: !variable helloworld-secret
