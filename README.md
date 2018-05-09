@@ -14,17 +14,17 @@ protected system application.
 
 - **Hello World App Service**
 
-    Hello World is the protected application service. When Hello World 
-    receives an authenticated request at its root path (`/`), it will
-    respond with the message `Hello World!`.
+    Hello World is the protected application service written in Ruby.
+    When Hello World receives an authenticated request at its root 
+    path (`/`), it will respond with the message `Hello World!`.
 
     Hello World generates its own authentication token secret when started,
     and will store this secret in Conjur as the variable `helloworld-secret`.
 
 - **Consumer App**
 
-    The Consumer application connects to Hello World to request the
-    response message using the authentication secret, `helloworld-secret`,
+    The Consumer is a Golang application that connects to Hello World to 
+    request the response message using the authentication secret, `helloworld-secret`,
     fetched from Conjur.
 
 
@@ -39,9 +39,11 @@ To run this system demo, you will need:
 1. Start Conjur Open Source
     This will create the containers for Conjur and the application services
     and start the Conjur service.
+
     > NOTE: This command will also clean up any previous application state and
     > reset the system
-    ```
+
+    ```bash
     $ ./start
     database uses an image, skipping
     conjur uses an image, skipping
@@ -55,9 +57,11 @@ To run this system demo, you will need:
     ```
 
 2. Load the Conjur policy
+
     > NOTE: After the first run of the demo, you will be prompted to overwrite
     > the local conjur-cli configuration. You should enter `yes` for this prompt.
-    ```
+
+    ```bash
     $ ./load-policy
     Starting conjurorg-rotation-demo_database_1 ... done
     Starting conjurorg-rotation-demo_conjur_1   ... done
@@ -82,7 +86,8 @@ To run this system demo, you will need:
     ```
 
 3. Start the **helloworld** application service
-    ```
+
+    ```bash
     $ ./start-helloworld
     Starting conjurorg-rotation-demo_database_1 ... done
     Starting conjurorg-rotation-demo_conjur_1   ... done
@@ -92,20 +97,22 @@ To run this system demo, you will need:
     ```
 
 4. Call the **helloworld** service, using Conjur to deliver the **helloworld** application secret
-    ```
+
+    ```bash
     $ ./connect
-    Starting conjurorg-rotation-demo_database_1 ... done
-    Starting conjurorg-rotation-demo_conjur_1   ... done
-    Connecting with API secret: 168d6054dce1876e528e86cde4d984ea81299674
-    Hello world!
+    ...
+    Connecting to Conjur...
+    Connecting to http://helloworld:4567 with token: a7ee8d2aee8d58dd671c8817e4b88a0a578bf085
+    Response from helloworld:  Hello world!
     ```
 
 5. Rotate the **helloworld** application secret and restart the service.
+
     > NOTE: This will cause **helloworld** to update Conjur with the new secret.
     > You should expect to see `./connect` display a different API secret
     > from the previous execution.
 
-    ```
+    ```bash
     $ ./rotate
     Stopping conjurorg-rotation-demo_helloworld_1 ... done
     Going to remove conjurorg-rotation-demo_helloworld_1
@@ -118,14 +125,16 @@ To run this system demo, you will need:
 
     # Executing connect again will use the updated app secret from Conjur
     $ ./connect
-    Starting conjurorg-rotation-demo_database_1 ... done
-    Starting conjurorg-rotation-demo_conjur_1   ... done
-    Connecting with API secret: f295fb473056805692373bbfc314362d9e78e377
-    Hello world!
+    ...
+    Connecting to Conjur...
+    Connecting to http://helloworld:4567 with token: e07ae244cc6710a7ca3df4cc938ce65c511c29a4
+    Response from helloworld:  Hello world!
     ```
 
 6. An unauthorized service request can be issued using connect with `--fail`
-    ```
+
+    ```bash
     $ ./connect --fail
-    Unauthorized
+    Connecting to http://helloworld:4567 with token: Invalid Token
+    Response from helloworld:  Unauthorized
     ```

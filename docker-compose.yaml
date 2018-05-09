@@ -28,7 +28,7 @@ services:
       CONJUR_APPLIANCE_URL: http://conjur
       CONJUR_ACCOUNT: demo
 
-    depends_on: [ conjur ]
+    depends_on: [ conjur, helloworld ]
 
   conjur:
     image: cyberark/conjur

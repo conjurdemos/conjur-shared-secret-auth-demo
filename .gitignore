@@ -1,3 +1,8 @@
 roles.json
 data_key
 helloworld/secret
+.DS_Store
+cli/.bash_history
+cli/.conjurrc
+cli/.netrc
+connect-curl
