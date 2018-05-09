@@ -1,29 +1,12 @@
 #!/bin/bash
 
+set -eu
+
 # Initialize Conjur with the demo account
 docker-compose run --rm conjur-cli init -u http://conjur -a demo
 
 # Fetch admin API key
-# If load-policy is called immediately after starting the Conjur server, then
-# the API key may not yet be available in the server log. To mitigate this,
-# we retry fetching the api key for 20 seconds.
-echo "Fetching API key..."
 api_key=$(docker-compose logs conjur | grep API | cut -d " " -f12 | tr -d "\n")
-timeout_counter=0
-while [ "$timeout_counter" -lt 20 -a -n "$api_key" ]; do
-        sleep .5
-        timeout_counter=$((timeout_counter+1))
-        
-        api_key=$(docker-compose logs conjur | grep API | cut -d " " -f12 | tr -d "\n")
-done
-
-if [ -n "$api_key" ]
-then
-    echo "API key ready"
-else
-    echo "Failed to retrieve Conjur API key within 20 seconds"
-    exit
-fi
 
 # Login as the Conjur Admin and load the demo policy
 docker-compose run --rm conjur-cli authn login -u admin -p $api_key

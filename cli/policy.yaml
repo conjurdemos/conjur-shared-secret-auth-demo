@@ -1,4 +1,5 @@
 - !host helloworld
+- !host consumer
 
 - !variable helloworld-secret
 
@@ -7,4 +8,12 @@
   privileges:
     - read
     - update
+  resource: !variable helloworld-secret 
+
+- !permit
+  role: !host consumer
+  privileges:
+    - read
+    - execute
   resource: !variable helloworld-secret
+  

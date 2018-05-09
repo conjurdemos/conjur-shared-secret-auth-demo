@@ -2,16 +2,28 @@ version: "3"
 services:
   
   helloworld:
-    image: conjurorg-rotation-demo
-    build: .
+    image: conjur-rotation-demo-helloworld
+    build: ./helloworld
     volumes:
-      - ./helloworld.rb:/app/helloworld.rb
-      - ./helloworld:/app/data
+      - ./helloworld/helloworld.rb:/app/helloworld.rb
     ports:
       - "8080:4567"
     environment: 
       RACK_ENV: DEMO
       CONJUR_AUTHN_LOGIN: host/helloworld
+      CONJUR_AUTHN_API_KEY: 
+      CONJUR_APPLIANCE_URL: http://conjur
+      CONJUR_ACCOUNT: demo
+
+    depends_on: [ conjur ]
+
+  consumer:
+    image: conjur-rotation-demo-consumer
+    build: ./consumer
+    volumes:
+      - ./consumer/consumer:/app/consumer
+    environment: 
+      CONJUR_AUTHN_LOGIN: host/consumer
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: http://conjur
       CONJUR_ACCOUNT: demo
