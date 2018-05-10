@@ -3,7 +3,10 @@
 set -eu
 
 # Initialize Conjur with the demo account
-docker-compose run --rm conjur-cli init -u http://conjur -a demo
+cat << CONJURRC > ./cli/.conjurrc
+appliance_url: http://conjur
+account: demo
+CONJURRC
 
 # Fetch admin API key
 api_key=$(docker-compose exec conjur conjurctl role \
