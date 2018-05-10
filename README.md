@@ -34,7 +34,7 @@ To run this system demo, you will need:
 
 1. Docker and Docker Compose
 
-## Running the Demo
+## <a id="demo"></a> Running the Demo
 
 1. Start Conjur Open Source
     This will create the containers for Conjur and the application services
@@ -138,3 +138,44 @@ To run this system demo, you will need:
     Connecting to http://helloworld:4567 with token: Invalid Token
     Response from helloworld:  Unauthorized
     ```
+
+## Running in Ubuntu
+
+A Vagrant machine is provided to make it easier to run this system
+demo under Ubuntu Linux.
+
+> NOTES: Vagrant CLI and VirtualBox are required to follow these steps exactly
+
+1. Using Vagrant, the first step is to start the Ubuntu VM
+
+    This will create the virtual machine in VirtualBox using a Ubuntu Xenial image,
+    and will install Docker and Docker Compose.
+
+    ```bash
+    $ vagrant up
+    Bringing machine 'default' up with 'virtualbox' provider...
+    ==> default: Importing base box 'ubuntu/xenial64'...
+    ==> default: Matching MAC address for NAT networking
+    ...
+    ```
+
+2. Connect to the Ubuntu VM
+
+    ```bash
+    vagrant ssh
+    Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-124-generic x86_64)
+    ...
+    vagrant@ubuntu-xenial:~$
+    ```
+
+3. Change the working directory to the demo directory in the VM
+
+    > NOTE: `/vagrant` in the VM is the mounted demo directory from the
+    > host machine.
+
+    ```bash
+    vagrant@ubuntu-xenial:~$ cd /vagrant
+    vagrant@ubuntu-xenial:/vagrant$
+    ```
+
+4. Now follow the  [demo instructions](#demo) above to run the demo
