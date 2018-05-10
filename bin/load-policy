@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -eu
+
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+
+# Initialize Conjur with the demo account
+cat << CONJURRC > "$demo_dir/cli/.conjurrc"
+appliance_url: http://conjur
+account: demo
+CONJURRC
+
+# Fetch admin API key
+api_key=$(docker-compose --project-directory "$demo_dir" \
+            exec conjur conjurctl role \
+            retrieve-key demo:user:admin | tr -d "\r\n")
+
+# Login as the Conjur Admin and load the demo policy
+docker-compose --project-directory "$demo_dir" \
+    run --rm conjur-cli authn login -u admin -p $api_key
+
+docker-compose --project-directory "$demo_dir" \
+    run --rm -T conjur-cli policy load root /root/policy.yaml

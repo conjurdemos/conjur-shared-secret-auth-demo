@@ -1,0 +1,6 @@
+#!/bin/bash
+
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+
+docker-compose --project-directory "$demo_dir" rm -sf helloworld
+"$demo_dir/bin/start-helloworld"

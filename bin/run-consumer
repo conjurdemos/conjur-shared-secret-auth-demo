@@ -1,0 +1,12 @@
+#!/bin/bash
+
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+consumer_id="consumer"
+
+export CONJUR_AUTHN_API_KEY=$(\
+    docker-compose --project-directory "$demo_dir" \
+    run -T conjur-cli host rotate_api_key --host "$consumer_id" \
+    | tr -d "\r\n")
+
+docker-compose --project-directory "$demo_dir" \
+    run consumer $@

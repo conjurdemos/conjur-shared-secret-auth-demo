@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+
+# Clean up environment
+docker-compose --project-directory "$demo_dir" down
+
+# Build the consumer binary and Docker images
+docker-compose --project-directory "$demo_dir" build
+
+# Start the conjur service
+docker-compose --project-directory "$demo_dir" \
+    run -T --no-deps --rm conjur data-key generate \
+    | egrep -v "^\w+:" > data_key
+export CONJUR_DATA_KEY="$(< data_key)"
+
+docker-compose --project-directory "$demo_dir" up -d conjur
+docker-compose --project-directory "$demo_dir" \
+    exec conjur conjurctl wait

@@ -44,7 +44,7 @@ To run this system demo, you will need:
     > reset the system
 
     ```bash
-    $ ./start
+    $ ./bin/start-conjur
     database uses an image, skipping
     conjur uses an image, skipping
     Building helloworld
@@ -62,7 +62,7 @@ To run this system demo, you will need:
     > the local conjur-cli configuration. You should enter `yes` for this prompt.
 
     ```bash
-    $ ./load-policy
+    $ ./bin/load-policy
     Starting conjurorg-rotation-demo_database_1 ... done
     Starting conjurorg-rotation-demo_conjur_1   ... done
     Wrote configuration to /root/.conjurrc
@@ -88,7 +88,7 @@ To run this system demo, you will need:
 3. Start the **helloworld** application service
 
     ```bash
-    $ ./start-helloworld
+    $ ./bin/start-helloworld
     Starting conjurorg-rotation-demo_database_1 ... done
     Starting conjurorg-rotation-demo_conjur_1   ... done
     Starting conjurorg-rotation-demo_database_1 ... done
@@ -99,7 +99,7 @@ To run this system demo, you will need:
 4. Call the **helloworld** service, using Conjur to deliver the **helloworld** application secret
 
     ```bash
-    $ ./connect
+    $ ./bin/run-consumer
     ...
     Connecting to Conjur...
     Connecting to http://helloworld:4567 with token: a7ee8d2aee8d58dd671c8817e4b88a0a578bf085
@@ -109,11 +109,11 @@ To run this system demo, you will need:
 5. Rotate the **helloworld** application secret and restart the service.
 
     > NOTE: This will cause **helloworld** to update Conjur with the new secret.
-    > You should expect to see `./connect` display a different API secret
+    > You should expect to see `./bin/run-consumer` display a different API secret
     > from the previous execution.
 
     ```bash
-    $ ./rotate
+    $ ./bin/rotate-key
     Stopping conjurorg-rotation-demo_helloworld_1 ... done
     Going to remove conjurorg-rotation-demo_helloworld_1
     Removing conjurorg-rotation-demo_helloworld_1 ... done
@@ -124,17 +124,18 @@ To run this system demo, you will need:
     Creating conjurorg-rotation-demo_helloworld_1 ... done
 
     # Executing connect again will use the updated app secret from Conjur
-    $ ./connect
+    $ ./bin/run-consumer
     ...
     Connecting to Conjur...
     Connecting to http://helloworld:4567 with token: e07ae244cc6710a7ca3df4cc938ce65c511c29a4
     Response from helloworld:  Hello world!
     ```
 
-6. An unauthorized service request can be issued using connect with `--fail`
+6. An unauthorized service request can be sent by running the consumer
+   with `--fail`
 
     ```bash
-    $ ./connect --fail
+    $ ./bin/run-consumer --fail
     Connecting to http://helloworld:4567 with token: Invalid Token
     Response from helloworld:  Unauthorized
     ```
