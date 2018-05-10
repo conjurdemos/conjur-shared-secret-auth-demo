@@ -1,0 +1,15 @@
+version: "3"
+services:
+  
+  conjur:
+    image: registry2.itci.conjur.net/conjur-appliance-cuke-master:4.9-stable
+    security_opt:
+      - 'seccomp=unconfined'
+    ports:
+      - 8443:443
+
+  client:
+    image: cyberark/conjur-cli:4
+    depends_on: [ conjur ]
+    volumes:
+      - ./cli:/root
