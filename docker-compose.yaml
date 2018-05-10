@@ -15,6 +15,7 @@ services:
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
       CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
+      CONJUR_VERSION: ${CONJUR_VERSION:-5}
 
     depends_on: [ conjur ]
 
@@ -30,8 +31,10 @@ services:
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
       CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
+      CONJUR_VERSION: ${CONJUR_VERSION:-5}
 
     depends_on: [ conjur, helloworld ]
+
 
   conjur:
     image: cyberark/conjur
