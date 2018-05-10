@@ -1,0 +1,45 @@
+set -e
+
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+
+echo "------------------"
+echo "Starting Conjur..."
+echo "------------------"
+"$demo_dir/bin/start-conjur"
+echo
+
+echo "-----------------"
+echo "Loading Policy..."
+echo "-----------------"
+"$demo_dir/bin/load-policy"
+echo
+
+echo "------------------------------"
+echo "Starting helloworld Service..."
+echo "------------------------------"
+"$demo_dir/bin/start-helloworld"
+echo
+
+echo "---------------------------"
+echo "Running Service Consumer..."
+echo "---------------------------"
+"$demo_dir/bin/run-consumer"
+echo
+
+echo "-----------------------"
+echo "Rotating Service Key..."
+echo "-----------------------"
+"$demo_dir/bin/rotate-key"
+echo
+
+echo "---------------------------------"
+echo "Running Service Consumer Again..."
+echo "---------------------------------"
+"$demo_dir/bin/run-consumer"
+echo
+
+echo "--------------------------------------------"
+echo "Running Service Consumer With Invalid Key..."
+echo "--------------------------------------------"
+"$demo_dir/bin/run-consumer" --fail
+echo
