@@ -6,7 +6,8 @@ set -eu
 docker-compose run --rm conjur-cli init -u http://conjur -a demo
 
 # Fetch admin API key
-api_key=$(docker-compose logs conjur | grep API | cut -d " " -f12 | tr -d "\n")
+api_key=$(docker-compose exec conjur conjurctl role \
+            retrieve-key demo:user:admin | tr -d "\r\n")
 
 # Login as the Conjur Admin and load the demo policy
 docker-compose run --rm conjur-cli authn login -u admin -p $api_key
