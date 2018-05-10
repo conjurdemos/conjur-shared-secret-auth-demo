@@ -8,3 +8,8 @@ cli/.netrc
 connect-curl
 .vagrant/
 *.log
+enterprise/cli/.bash_history
+enterprise/cli/.conjurrc
+enterprise/cli/.gem/
+enterprise/cli/.netrc
+enterprise/cli/conjur-cucumber.pem
