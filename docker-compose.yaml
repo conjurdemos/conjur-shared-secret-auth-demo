@@ -14,7 +14,6 @@ services:
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: http://conjur
       CONJUR_ACCOUNT: demo
-      CONJUR_VERSION: 4
 
     depends_on: [ conjur ]
 
@@ -28,7 +27,6 @@ services:
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: http://conjur
       CONJUR_ACCOUNT: demo
-      CONJUR_VERSION: 4
 
     depends_on: [ conjur, helloworld ]
 
