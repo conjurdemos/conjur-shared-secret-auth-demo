@@ -9,7 +9,8 @@ docker-compose down
 docker-compose build
 
 # Start the conjur service
-docker-compose run --no-deps --rm conjur data-key generate > data_key
+docker-compose run -T --no-deps --rm conjur data-key generate \
+    | egrep -v "^\w+:" > data_key
 export CONJUR_DATA_KEY="$(< data_key)"
 docker-compose up -d conjur
 docker-compose exec conjur conjurctl wait

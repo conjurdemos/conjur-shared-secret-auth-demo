@@ -98,11 +98,3 @@ func sendRequestToHelloWorld(serviceURL string, serviceToken string) (string, er
 
 	return string(body), nil
 }
-
-func getEnvOrDefault(key, fallback string) string {
-	value, ok := os.LookupEnv(key)
-	if ok {
-		return value
-	}
-	return fallback
-}

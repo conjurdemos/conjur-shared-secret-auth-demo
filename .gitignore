@@ -6,3 +6,5 @@ cli/.bash_history
 cli/.conjurrc
 cli/.netrc
 connect-curl
+.vagrant/
+*.log
