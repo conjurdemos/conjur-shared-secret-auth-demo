@@ -3,7 +3,7 @@
 set -e
 
 # Clean up environment
-docker-compose down --rmi 'all'
+docker-compose down
 
 # Build the consumer binary and Docker images
 docker-compose build

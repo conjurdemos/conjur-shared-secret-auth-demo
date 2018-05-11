@@ -12,7 +12,7 @@ services:
       RACK_ENV: DEMO
       CONJUR_AUTHN_LOGIN: host/${DEMO_SERVICE_ID:-helloworld}
       CONJUR_AUTHN_API_KEY: 
-      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-"http://conjur"}
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
       CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
 
     depends_on: [ conjur ]
@@ -25,7 +25,7 @@ services:
     environment: 
       CONJUR_AUTHN_LOGIN: host/${DEMO_CONSUMER_ID:-consumer}
       CONJUR_AUTHN_API_KEY: 
-      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-"http://conjur"}
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
       CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
 
     depends_on: [ conjur, helloworld ]

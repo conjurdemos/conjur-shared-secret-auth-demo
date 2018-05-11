@@ -1,6 +1,6 @@
 #!/bin/bash
 
-service_id=${DEMO_SERVICE_ID:-"helloworld"}
+service_id=${DEMO_SERVICE_ID:-helloworld}
 
 # Stop service if running
 docker-compose rm -sf helloworld
