@@ -12,9 +12,11 @@ you learn something and feel satisfied.
    then give us a link so we can spread the love.
 2. Fork this repo and use it as a base for a different or more sophisticated
    demo. (The demo, and Conjur, are Free software.)
-3. Report a bug or request an enhancement by [opening a GitHub
+3. Report a bug, ask a question, or request an enhancement by [opening a GitHub
    issue](https://github.com/cyberark/conjur/issues/new)
 4. Open a pull request for us to merge features or documentation you've added.
+5. Find us on the [Conjur community chat][chat] to bring us your thoughts and
+   quesitions about anything DevOps or security related.
 
 ## Code of conduct
 
@@ -22,3 +24,4 @@ As a Conjur community space, this GitHub repo is subject to the [Conjur code of
 conduct][coc].
 
 [coc]: https://github.com/cyberark/conjur/blob/master/CODE_OF_CONDUCT.md
+[chat]: https://slackin-conjur.herokuapp.com
