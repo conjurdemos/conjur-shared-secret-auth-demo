@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+# Clean up environment
+docker-compose down
+
+# Build the consumer binary and Docker images
+docker-compose build
+
+export CONJUR_DATA_KEY="$(
+    docker-compose run -T --no-deps --rm conjur data-key generate \
+    | egrep -v "^\w+:" )"
+
+# Start the conjur service
+docker-compose up -d conjur
+docker-compose exec conjur conjurctl wait
+
+# Initialize Conjur CLI with the demo account
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+cat << CONJURRC > "$demo_dir/cli/.conjurrc"
+appliance_url: http://conjur
+account: demo
+CONJURRC

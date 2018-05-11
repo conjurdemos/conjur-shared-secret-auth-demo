@@ -1,7 +1,0 @@
-#!/bin/bash
-
-export CONJUR_AUTHN_API_KEY=$(\
-    docker-compose run -T conjur-cli host rotate_api_key --host helloworld \
-    | tr -d "\r\n")
-
-docker-compose up -d --no-recreate helloworld

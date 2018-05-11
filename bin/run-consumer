@@ -1,0 +1,10 @@
+#!/bin/bash -eu
+
+consumer_id=${DEMO_CONSUMER_ID:-consumer}
+
+# Rotate the api key for the consumer to connect to Conjur
+export CONJUR_AUTHN_API_KEY=$(docker-compose run -T conjur-cli \
+    host rotate_api_key --host "$consumer_id" \
+    | tr -d "\r\n")
+
+docker-compose run consumer $@

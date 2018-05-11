@@ -1,0 +1,15 @@
+#!/bin/bash
+
+service_id=${DEMO_SERVICE_ID:-helloworld}
+
+# Stop service if running
+docker-compose rm -sf helloworld
+
+# Rotate the api key for the service to connect to Conjur
+export CONJUR_AUTHN_API_KEY=$(docker-compose run -T conjur-cli \
+    host rotate_api_key --host "$service_id" \
+    | tr -d "\r\n")
+
+# Start service, this will cause the service to
+# generate a new shared secret
+docker-compose up -d --no-recreate helloworld

@@ -10,10 +10,10 @@ services:
       - "8080:4567"
     environment: 
       RACK_ENV: DEMO
-      CONJUR_AUTHN_LOGIN: host/helloworld
+      CONJUR_AUTHN_LOGIN: host/${DEMO_SERVICE_ID:-helloworld}
       CONJUR_AUTHN_API_KEY: 
-      CONJUR_APPLIANCE_URL: http://conjur
-      CONJUR_ACCOUNT: demo
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
+      CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
 
     depends_on: [ conjur ]
 
@@ -23,16 +23,16 @@ services:
     volumes:
       - ./consumer/consumer:/app/consumer
     environment: 
-      CONJUR_AUTHN_LOGIN: host/consumer
+      CONJUR_AUTHN_LOGIN: host/${DEMO_CONSUMER_ID:-consumer}
       CONJUR_AUTHN_API_KEY: 
-      CONJUR_APPLIANCE_URL: http://conjur
-      CONJUR_ACCOUNT: demo
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
+      CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-demo}
 
     depends_on: [ conjur, helloworld ]
 
   conjur:
     image: cyberark/conjur
-    command: server -a demo
+    command: server -a "${CONJUR_ACCOUNT:-demo}"
     environment:
       DATABASE_URL: postgres://postgres@database/postgres
       CONJUR_DATA_KEY:
