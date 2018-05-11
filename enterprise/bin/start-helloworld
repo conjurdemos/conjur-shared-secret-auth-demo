@@ -1,0 +1,10 @@
+#!/bin/bash -eu
+
+service_id=${DEMO_SERVICE_ID:-helloworld}
+
+export CONJUR_AUTHN_API_KEY=$(\
+    docker-compose run --rm -T client host rotate_api_key --host "$service_id" \
+    | tr -d "\r\n")
+echo "rotated 'service_id' machine identity API key"
+
+docker-compose up -d helloworld

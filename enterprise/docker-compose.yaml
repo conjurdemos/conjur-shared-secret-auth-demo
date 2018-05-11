@@ -31,7 +31,7 @@ services:
     depends_on: [ conjur ]
 
   conjur:
-    image: registry2.itci.conjur.net/conjur-appliance-cuke-master:4.9-stable
+    image: ${CONJUR_APPLIANCE_IMAGE:?Conjur Enterprise Appliance container image name required }
     security_opt:
       - 'seccomp=unconfined'
     ports:

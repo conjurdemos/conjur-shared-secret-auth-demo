@@ -1,13 +1,19 @@
 #!/bin/bash -eu
 
+conjur_url=${CONJUR_URL:-https://conjur}
+conjur_account=${CONJUR_ACCOUNT:-cucumber}
+conjur_admin=${CONJUR_ADMIN_LOGIN:-admin}
+
 # Pull required container images from Docker Hub
 echo 'Pulling Docker images...'
 docker-compose pull --quiet conjur
+(cd .. && docker-compose build helloworld consumer)
 
 # Remove containers and files created in earlier runs (if any)
 echo 'Bringing up fresh containers...'
 docker-compose down
-rm cli/.conjurrc
+demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
+rm "$demo_dir/cli/.conjurrc"
 
 # Start containers & wait for Conjur to be responsive
 docker-compose up -d
@@ -17,5 +23,5 @@ docker-compose exec conjur /opt/conjur/evoke/bin/wait_for_conjur
 # Prepare the client to connect to the Conjur server
 # Initialize the Conjur client
 echo 'Connecting the client to the Conjur server...'
-docker-compose run --rm client init -h https://conjur -a cucumber
-docker-compose run --rm client authn login -u admin -p secret
+docker-compose run --rm client init -h "$conjur_url" -a "$conjur_account"
+docker-compose run --rm client authn login -u "$conjur_admin"
