@@ -9,6 +9,7 @@ docker-compose pull --quiet conjur
 # Remove containers and files created in earlier runs (if any)
 echo 'Bringing up fresh containers...'
 docker-compose down
+rm cli/.conjurrc
 
 # Start containers & wait for Conjur to be responsive
 docker-compose up -d

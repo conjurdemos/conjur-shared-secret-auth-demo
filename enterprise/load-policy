@@ -2,6 +2,5 @@
 
 set -eu
 
-docker-compose run --rm -T --entrypoint "/bin/bash" client bash -c \
-    'conjur client plugin install policy \
-    && conjur policy load --as-role group:security_admin /root/policy.yaml'
+docker-compose run --rm client plugin install policy
+docker-compose run --rm client policy load --as-group=security_admin policy.yaml

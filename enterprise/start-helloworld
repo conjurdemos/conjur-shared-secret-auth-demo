@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export CONJUR_AUTHN_API_KEY=$(\
+    docker-compose run --rm -T client host rotate_api_key --host helloworld \
+    | tr -d "\r\n")
+echo "rotated 'helloworld' machine identity API key"
+
+docker-compose up -d helloworld

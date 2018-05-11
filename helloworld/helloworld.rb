@@ -7,8 +7,11 @@ require 'conjur-api'
 conjur_account = ENV['CONJUR_ACCOUNT']
 conjur_username = ENV['CONJUR_AUTHN_LOGIN']
 conjur_api_key = ENV['CONJUR_AUTHN_API_KEY']
+conjur_cert = ENV['CONJUR_CERT_FILE']
 secret_id = ENV['DEMO_SERVICE_KEY_ID']
 resource_id = "#{conjur_account}:variable:#{secret_id}"
+
+OpenSSL::SSL::SSLContext::DEFAULT_CERT_STORE.add_file conjur_cert if conjur_cert
 
 # Generate service key value and store it in the attached
 # Conjur service
