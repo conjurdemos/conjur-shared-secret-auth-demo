@@ -29,7 +29,7 @@ echo
 echo "-----------------------"
 echo "Rotating Service Key..."
 echo "-----------------------"
-"$demo_dir/bin/rotate-key"
+"$demo_dir/bin/start-helloworld"
 echo
 
 echo "---------------------------------"
