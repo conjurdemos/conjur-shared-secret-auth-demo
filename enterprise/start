@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+#!/bin/bash -eu
 
 # Pull required container images from Docker Hub
 echo 'Pulling Docker images...'
