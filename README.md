@@ -1,8 +1,11 @@
 # Conjur Rotation Demo
 
 This example application system demonstrates using Conjur to store,
-rotate, and fetch the the application secret required to access a 
+rotate, and fetch an application secret required to access a 
 protected system application. 
+
+A version of the example application using the Conjur Enterprise Appliance
+is also available [here](enterprise/README.md).
 
 ![System architecture](./design/system_overview.png "System Overview")
 
@@ -58,9 +61,8 @@ To run this system demo, you will need:
 
 2. Load the Conjur policy
 
-    > NOTE: After the first run of the demo, you will be prompted to overwrite
-    > the local conjur-cli configuration. You should enter `yes` for this prompt.
-
+    > NOTE: You can review the policy [here](cli/policy.yaml).
+    
     ```bash
     $ bin/load-policy
     Starting conjurorg-rotation-demo_database_1 ... done

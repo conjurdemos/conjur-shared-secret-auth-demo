@@ -1,0 +1,49 @@
+version: "3"
+services:
+  helloworld:
+    image: conjur-rotation-demo-helloworld
+    environment:
+      RACK_ENV: DEMO
+      DEMO_SERVICE_KEY_ID: ${DEMO_SERVICE_KEY_ID:-helloworld-secret}
+      CONJUR_AUTHN_LOGIN: host/${DEMO_SERVICE_ID:-helloworld}
+      CONJUR_AUTHN_API_KEY: 
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-https://conjur/api}
+      CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-cucumber}
+      CONJUR_CERT_FILE: /mnt/ssl/ca.pem
+      CONJUR_VERSION: 4
+    volumes:
+      - conjur-cert:/mnt/ssl
+    depends_on: [ conjur ]
+
+  consumer:
+    image: conjur-rotation-demo-consumer
+    environment:
+      DEMO_SERVICE_KEY_ID: ${DEMO_SERVICE_KEY_ID:-helloworld-secret}
+      DEMO_SERVICE_URL: http://helloworld:4567
+      CONJUR_AUTHN_LOGIN: host/${DEMO_CONSUMER_ID:-consumer}
+      CONJUR_AUTHN_API_KEY: 
+      CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-https://conjur/api}
+      CONJUR_ACCOUNT: ${CONJUR_ACCOUNT:-cucumber}
+      CONJUR_CERT_FILE: /mnt/ssl/ca.pem
+      CONJUR_VERSION: 4
+    volumes:
+      - conjur-cert:/mnt/ssl
+    depends_on: [ conjur ]
+
+  conjur:
+    image: ${CONJUR_APPLIANCE_IMAGE:?Conjur Enterprise Appliance container image name required }
+    security_opt:
+      - 'seccomp=unconfined'
+    ports:
+      - 8443:443
+    volumes:
+      - conjur-cert:/opt/conjur/etc/ssl/
+
+  client:
+    image: cyberark/conjur-cli:4
+    depends_on: [ conjur ]
+    volumes:
+      - ./cli:/root
+
+volumes:
+  conjur-cert:

@@ -33,6 +33,7 @@ services:
 
     depends_on: [ conjur, helloworld ]
 
+
   conjur:
     image: cyberark/conjur
     command: server -a "${CONJUR_ACCOUNT:-demo}"

@@ -1,0 +1,4 @@
+#!/bin/bash -eu
+
+docker-compose run --rm client plugin install policy
+docker-compose run --rm client policy load --as-group=security_admin policy.yaml
