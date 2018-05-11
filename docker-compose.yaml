@@ -10,6 +10,7 @@ services:
       - "8080:4567"
     environment: 
       RACK_ENV: DEMO
+      DEMO_SERVICE_KEY_ID: ${DEMO_SERVICE_KEY_ID:-helloworld-secret}
       CONJUR_AUTHN_LOGIN: host/${DEMO_SERVICE_ID:-helloworld}
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}
@@ -22,7 +23,9 @@ services:
     build: ./consumer
     volumes:
       - ./consumer/consumer:/app/consumer
-    environment: 
+    environment:       
+      DEMO_SERVICE_KEY_ID: ${DEMO_SERVICE_KEY_ID:-helloworld-secret}
+      DEMO_SERVICE_URL: http://helloworld:4567
       CONJUR_AUTHN_LOGIN: host/${DEMO_CONSUMER_ID:-consumer}
       CONJUR_AUTHN_API_KEY: 
       CONJUR_APPLIANCE_URL: ${CONJUR_APPLIANCE_URL:-http://conjur}

@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	secretID := "helloworld-secret"
-	serviceURL := "http://helloworld:4567"
+	secretID := os.Getenv("DEMO_SERVICE_KEY_ID")
+	serviceURL := os.Getenv("DEMO_SERVICE_URL")
 	conjurLogin := os.Getenv("CONJUR_AUTHN_LOGIN")
 	conjurAPIKey := os.Getenv("CONJUR_AUTHN_API_KEY")
 
@@ -34,13 +34,13 @@ func main() {
 	}
 
 	// Send the request to the remote service
-	response, err := sendRequestToHelloWorld(serviceURL, serviceToken)
+	response, err := sendRequestToService(serviceURL, serviceToken)
 
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println("Response from helloworld: ", response)
+	fmt.Println("Response from service: ", response)
 }
 
 func fetchSecretFromConjur(secretID string, conjurLogin string, conjurAPIKey string) (string, error) {
@@ -68,7 +68,7 @@ func fetchSecretFromConjur(secretID string, conjurLogin string, conjurAPIKey str
 	return string(secretValue), nil
 }
 
-func sendRequestToHelloWorld(serviceURL string, serviceToken string) (string, error) {
+func sendRequestToService(serviceURL string, serviceToken string) (string, error) {
 
 	fmt.Fprintf(os.Stderr, "Connecting to %s with token: %s\n", serviceURL, serviceToken)
 

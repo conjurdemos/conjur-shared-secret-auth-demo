@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -eu
 
 service_id=${DEMO_SERVICE_ID:-helloworld}
 
