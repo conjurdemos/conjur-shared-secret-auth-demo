@@ -13,7 +13,9 @@ docker-compose pull --quiet conjur
 echo 'Bringing up fresh containers...'
 docker-compose down
 demo_dir="$( cd "$(dirname "$0")/.." ; pwd -P )"
-rm "$demo_dir/cli/.conjurrc"
+if [[ -f "$demo_dir/cli/.conjurrc" ]]; then
+    rm "$demo_dir/cli/.conjurrc"
+fi
 
 # Start containers & wait for Conjur to be responsive
 docker-compose up -d

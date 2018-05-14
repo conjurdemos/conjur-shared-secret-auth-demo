@@ -1,4 +1,4 @@
-# Conjur Rotation Demo
+# Conjur Shared Secret Authentication Demo
 
 This example application system demonstrates using Conjur to store,
 rotate, and fetch an application secret required to access a 

@@ -1,5 +1,4 @@
-# Conjur Enterprise Rotation Demo
-
+# Conjur Enterprise Shared Secret Authentication Demo
 This example demonstrates using Conjur Enterprise 
 to store, rotate, and fetch an application secret required to 
 access a protected system application. 
