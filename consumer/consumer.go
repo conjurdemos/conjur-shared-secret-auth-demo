@@ -47,7 +47,7 @@ func fetchSecretFromConjur(secretID string, conjurLogin string, conjurAPIKey str
 	fmt.Fprintf(os.Stderr, "Connecting to Conjur...\n")
 
 	// Receive the consumer conjur login and key
-	config := conjurapi.LoadConfig()
+	config, err := conjurapi.LoadConfig()
 	conjur, err := conjurapi.NewClientFromKey(config,
 		authn.LoginPair{
 			Login:  conjurLogin,
