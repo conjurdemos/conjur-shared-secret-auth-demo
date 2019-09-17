@@ -48,6 +48,10 @@ func fetchSecretFromConjur(secretID string, conjurLogin string, conjurAPIKey str
 
 	// Receive the consumer conjur login and key
 	config, err := conjurapi.LoadConfig()
+	if err != nil {
+		return "", err
+	}
+	
 	conjur, err := conjurapi.NewClientFromKey(config,
 		authn.LoginPair{
 			Login:  conjurLogin,
