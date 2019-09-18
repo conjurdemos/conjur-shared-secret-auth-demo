@@ -1,5 +1,5 @@
 # Build golang binary stage
-FROM golang:1.10
+FROM golang:1.12
 
 RUN go get github.com/cyberark/conjur-api-go/conjurapi
 COPY ./consumer.go .
